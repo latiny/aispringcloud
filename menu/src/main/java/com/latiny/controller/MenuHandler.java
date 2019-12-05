@@ -52,4 +52,20 @@ public class MenuHandler {
         List<Type> result = typeRepository.findAll();
         return result;
     }
+
+    @PostMapping("/save")
+    public void save(@RequestBody Menu menu) {
+        menuRepository.save(menu);
+    }
+
+    @GetMapping("/findById/{id}")
+    public Menu findById(@PathVariable("id") long id) {
+       return menuRepository.findById(id);
+    }
+
+    @PutMapping("/update")
+    public void update(@RequestBody Menu menu) {
+        menuRepository.update(menu);
+    }
+
 }
