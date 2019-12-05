@@ -1,6 +1,7 @@
 package com.latiny.repository;
 
 import com.latiny.entity.Menu;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  * @description: Repository
  * @date 2019/12/3 10:55
  */
+@Repository
 public interface MenuRepository {
 
     public List<Menu> findAll(int index, int limit);
@@ -21,4 +23,6 @@ public interface MenuRepository {
     public void save(Menu menu);
 
     public void update(Menu menu);
+
+    public void deleteById(long id);
 }

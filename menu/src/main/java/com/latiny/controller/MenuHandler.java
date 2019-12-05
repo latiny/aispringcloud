@@ -1,14 +1,13 @@
 package com.latiny.controller;
 
 import com.latiny.entity.Menu;
+import com.latiny.entity.Type;
 import com.latiny.repository.MenuRepository;
+import com.latiny.repository.TypeRepository;
 import com.latiny.vo.MenuVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +26,8 @@ public class MenuHandler {
 
     @Autowired
     private MenuRepository menuRepository;
+    @Autowired
+    private TypeRepository typeRepository;
 
     @GetMapping("/findAll/{index}/{limit}")
     public MenuVO findAll(@PathVariable("index") int index,
@@ -38,5 +39,17 @@ public class MenuHandler {
     @GetMapping("/index")
     public String index() {
         return this.port;
+    }
+
+
+    @DeleteMapping("/deleteById/{id}")
+    public void findAll(@PathVariable("id") long id) {
+        menuRepository.deleteById(id);
+    }
+
+    @GetMapping("/findTypes")
+    public List<Type> findTypes() {
+        List<Type> result = typeRepository.findAll();
+        return result;
     }
 }

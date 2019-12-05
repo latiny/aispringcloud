@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 /**
  * @author Latiny
  * @version 1.0
- * @description: TODO
+ * @description: ClientHandler
  * @date 2019/12/3 15:13
  */
 @Controller
 @RequestMapping("/client")
-public class ClientHandler {
+public class MenuHandler {
 
     @Autowired
     private MenuFeign menuFeign;
@@ -30,5 +30,11 @@ public class ClientHandler {
     @GetMapping("/redirect/{location}")
     public String redirect(@PathVariable("location") String location) {
         return location;
+    }
+
+    @GetMapping("/deleteById/{id}")
+    public String deleteById(@PathVariable("id") long id) {
+        menuFeign.deleteById(id);
+        return "redirect:/client/redirect/index";
     }
 }
