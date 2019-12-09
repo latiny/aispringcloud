@@ -2,12 +2,9 @@ package com.latiny.feign;
 
 import com.latiny.entity.Menu;
 import com.latiny.entity.Type;
-import com.latiny.vo.MenuVO;
+import com.latiny.vo.ResultVO;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,7 +18,7 @@ import java.util.List;
 public interface MenuFeign {
 
     @GetMapping("/menu/findAll/{index}/{limit}")
-    public MenuVO findAll(@PathVariable("index") int index, @PathVariable("limit") int limit);
+    public ResultVO findAll(@PathVariable("index") int index, @PathVariable("limit") int limit);
 
     @DeleteMapping("/menu/deleteById/{id}")
     public void deleteById(@PathVariable("id") long id);
@@ -35,6 +32,6 @@ public interface MenuFeign {
     @GetMapping("/menu/findById/{id}")
     public Menu findById(@PathVariable("id") long id);
 
-    @PostMapping("/menu/update")
+    @PutMapping("/menu/update")
     public void update(Menu menu);
 }

@@ -4,7 +4,7 @@ import com.latiny.entity.Menu;
 import com.latiny.entity.Type;
 import com.latiny.repository.MenuRepository;
 import com.latiny.repository.TypeRepository;
-import com.latiny.vo.MenuVO;
+import com.latiny.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
@@ -30,10 +30,10 @@ public class MenuHandler {
     private TypeRepository typeRepository;
 
     @GetMapping("/findAll/{index}/{limit}")
-    public MenuVO findAll(@PathVariable("index") int index,
-                          @PathVariable("limit")int limit) {
+    public ResultVO findAll(@PathVariable("index") int index,
+                            @PathVariable("limit")int limit) {
         int count = menuRepository.count();
-        return new MenuVO(0, "", count, menuRepository.findAll(index, limit));
+        return new ResultVO(0, "", count, menuRepository.findAll(index, limit));
     }
 
     @GetMapping("/index")

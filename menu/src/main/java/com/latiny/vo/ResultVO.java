@@ -9,7 +9,7 @@ import java.util.List;
  * @description: MenuVO
  * @date 2019/12/3 16:42
  */
-public class MenuVO {
+public class ResultVO<T> {
 
     private Integer code;
 
@@ -17,12 +17,12 @@ public class MenuVO {
 
     private Integer count;
 
-    private List<Menu> data;
+    private List<T> data;
 
-    public MenuVO() {
+    public ResultVO() {
     }
 
-    public MenuVO(Integer code, String msg, Integer count, List<Menu> data) {
+    public ResultVO(Integer code, String msg, Integer count, List<T> data) {
         this.code = code;
         this.msg = msg;
         this.count = count;
@@ -53,11 +53,11 @@ public class MenuVO {
         this.count = count;
     }
 
-    public List<Menu> getData() {
+    public List<T> getData() {
         return data;
     }
 
-    public void setData(List<Menu> data) {
+    public void setData(List<T> data) {
         this.data = data;
     }
 }

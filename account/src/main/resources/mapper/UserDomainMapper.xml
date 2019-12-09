@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.latiny.mapper.UserDomainMapper">
+  <resultMap id="BaseResultMap" type="cn.latiny.domain.UserDomain">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="real_name" jdbcType="VARCHAR" property="realName" />
+    <result column="phone" jdbcType="BIGINT" property="phone" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
+    <result column="account_non_expired" jdbcType="INTEGER" property="accountNonExpired" />
+    <result column="account_non_locked" jdbcType="INTEGER" property="accountNonLocked" />
+    <result column="credentials_non_expired" jdbcType="INTEGER" property="credentialsNonExpired" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_name, password, real_name, phone, enabled, account_non_expired, account_non_locked, 
+    credentials_non_expired, create_time, update_time, is_deleted
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from users
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from users
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="cn.latiny.domain.UserDomain">
+    insert into users (id, user_name, password, 
+      real_name, phone, enabled, 
+      account_non_expired, account_non_locked, credentials_non_expired, 
+      create_time, update_time, is_deleted
+      )
+    values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{realName,jdbcType=VARCHAR}, #{phone,jdbcType=BIGINT}, #{enabled,jdbcType=INTEGER}, 
+      #{accountNonExpired,jdbcType=INTEGER}, #{accountNonLocked,jdbcType=INTEGER}, #{credentialsNonExpired,jdbcType=INTEGER}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="cn.latiny.domain.UserDomain">
+    insert into users
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="realName != null">
+        real_name,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="accountNonExpired != null">
+        account_non_expired,
+      </if>
+      <if test="accountNonLocked != null">
+        account_non_locked,
+      </if>
+      <if test="credentialsNonExpired != null">
+        credentials_non_expired,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isDeleted != null">
+        is_deleted,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=BIGINT},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="accountNonExpired != null">
+        #{accountNonExpired,jdbcType=INTEGER},
+      </if>
+      <if test="accountNonLocked != null">
+        #{accountNonLocked,jdbcType=INTEGER},
+      </if>
+      <if test="credentialsNonExpired != null">
+        #{credentialsNonExpired,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.latiny.domain.UserDomain">
+    update users
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="realName != null">
+        real_name = #{realName,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=BIGINT},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=INTEGER},
+      </if>
+      <if test="accountNonExpired != null">
+        account_non_expired = #{accountNonExpired,jdbcType=INTEGER},
+      </if>
+      <if test="accountNonLocked != null">
+        account_non_locked = #{accountNonLocked,jdbcType=INTEGER},
+      </if>
+      <if test="credentialsNonExpired != null">
+        credentials_non_expired = #{credentialsNonExpired,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.latiny.domain.UserDomain">
+    update users
+    set user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      real_name = #{realName,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=BIGINT},
+      enabled = #{enabled,jdbcType=INTEGER},
+      account_non_expired = #{accountNonExpired,jdbcType=INTEGER},
+      account_non_locked = #{accountNonLocked,jdbcType=INTEGER},
+      credentials_non_expired = #{credentialsNonExpired,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_deleted = #{isDeleted,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from users
+  </select>
+
+  <select id="findUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from  users
+    where user_name = #{username, jdbcType=VARCHAR}
+  </select>
+</mapper>

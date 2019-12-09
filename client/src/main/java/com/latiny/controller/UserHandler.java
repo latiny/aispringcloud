@@ -1,13 +1,15 @@
 package com.latiny.controller;
 
 
-import com.latiny.entity.Menu;
-import com.latiny.feign.MenuFeign;
+import com.latiny.entity.User;
+import com.latiny.feign.UserFeign;
 import com.latiny.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.Date;
 
 /**
  * @author Latiny
@@ -16,17 +18,17 @@ import org.springframework.web.servlet.ModelAndView;
  * @date 2019/12/3 15:13
  */
 @Controller
-@RequestMapping("/menu")
-public class MenuHandler {
+@RequestMapping("/user")
+public class UserHandler {
 
     @Autowired
-    private MenuFeign menuFeign;
+    private UserFeign userFeign;
 
     @GetMapping("/findAll")
     @ResponseBody
     public ResultVO findAll(@RequestParam("page") int page, @RequestParam("limit") int limit) {
         int index = (page - 1) * limit;
-        return menuFeign.findAll(index, limit);
+        return userFeign.findAll(index, limit);
     }
 
     @GetMapping("/redirect/{location}")
@@ -36,36 +38,28 @@ public class MenuHandler {
 
     @GetMapping("/deleteById/{id}")
     public String deleteById(@PathVariable("id") long id) {
-        menuFeign.deleteById(id);
-        return "redirect:/menu/redirect/index";
-    }
-
-    @GetMapping("/findTypes")
-    public ModelAndView findTypes() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("menu_add");
-        modelAndView.addObject("list", menuFeign.findTypes());
-        return modelAndView;
+        userFeign.deleteById(id);
+        return "redirect:/user/redirect/user_manage";
     }
 
     @PostMapping("/save")
-    public String save(Menu menu) {
-        menuFeign.save(menu);
-        return "redirect:/menu/redirect/index";
+    public String save(User user) {
+        user.setRegisterDate(user.getRegisterDate()==null ? new Date() : user.getRegisterDate());
+        userFeign.save(user);
+        return "redirect:/user/redirect/user_manage";
     }
 
     @GetMapping("/findById/{id}")
     public ModelAndView findById(@PathVariable("id") long id) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("menu_edit");
-        modelAndView.addObject("menu", menuFeign.findById(id));
-        modelAndView.addObject("list", menuFeign.findTypes());
+        modelAndView.setViewName("user_edit");
+        modelAndView.addObject("user", userFeign.findById(id));
         return modelAndView;
     }
 
     @PostMapping("/update")
-    public String update(Menu menu) {
-        menuFeign.update(menu);
-        return "redirect:/menu/redirect/index";
+    public String update(User user) {
+        userFeign.update(user);
+        return "redirect:/user/redirect/index";
     }
 }
