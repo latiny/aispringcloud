@@ -4,6 +4,7 @@ import com.latiny.entity.Menu;
 import com.latiny.entity.Type;
 import com.latiny.vo.ResultVO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,12 +27,12 @@ public interface MenuFeign {
     @GetMapping("/menu/findTypes")
     public List<Type> findTypes();
 
-    @PostMapping("/menu/save")
+    @PostMapping(value = "/menu/save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void save(Menu menu);
 
     @GetMapping("/menu/findById/{id}")
     public Menu findById(@PathVariable("id") long id);
 
-    @PutMapping("/menu/update")
+    @PutMapping(value = "/menu/update", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(Menu menu);
 }

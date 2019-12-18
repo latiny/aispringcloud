@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.latiny.mapper.RoleDomainMapper">
-  <resultMap id="BaseResultMap" type="cn.latiny.domain.RoleDomain">
+<mapper namespace="com.latiny.mapper.RoleDomainMapper">
+  <resultMap id="BaseResultMap" type="com.latiny.domain.RoleDomain">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
   </resultMap>
 
   <sql id="Base_Column_List">
-    id, name, create_time, update_time, is_deleted
+    id, name, code, create_time, update_time, is_deleted
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from role
     where id = #{id,jdbcType=BIGINT}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from role
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.latiny.domain.RoleDomain">
-    insert into role (id, name, desc, 
-      create_time, update_time, is_deleted
-      )
-    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{desc,jdbcType=VARCHAR}, 
+
+  <insert id="insert" parameterType="com.latiny.domain.RoleDomain">
+    insert into role (id, name, code, create_time, update_time, is_deleted)
+    values (#{id,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR}, #{code,jdbcType=VARCHAR},
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.latiny.domain.RoleDomain">
+
+  <insert id="insertSelective" parameterType="com.latiny.domain.RoleDomain">
     insert into role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -39,8 +42,8 @@
       <if test="name != null">
         name,
       </if>
-      <if test="desc != null">
-        desc,
+      <if test="code != null">
+        code,
       </if>
       <if test="createTime != null">
         create_time,
@@ -59,8 +62,8 @@
       <if test="name != null">
         #{name,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        #{desc,jdbcType=VARCHAR},
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -74,14 +77,14 @@
     </trim>
   </insert>
 
-  <update id="updateByPrimaryKeySelective" parameterType="cn.latiny.domain.RoleDomain">
+  <update id="updateByPrimaryKeySelective" parameterType="com.latiny.domain.RoleDomain">
     update role
     <set>
       <if test="name != null">
         name = #{name,jdbcType=VARCHAR},
       </if>
-      <if test="desc != null">
-        desc = #{desc,jdbcType=VARCHAR},
+      <if test="code != null">
+        desc = #{code,jdbcType=VARCHAR},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
@@ -95,10 +98,11 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.latiny.domain.RoleDomain">
+
+  <update id="updateByPrimaryKey" parameterType="com.latiny.domain.RoleDomain">
     update role
     set name = #{name,jdbcType=VARCHAR},
-      desc = #{desc,jdbcType=VARCHAR},
+      code = #{code,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_time = #{updateTime,jdbcType=TIMESTAMP},
       is_deleted = #{isDeleted,jdbcType=INTEGER}
@@ -119,4 +123,5 @@
     inner join role_resource rr on r.id = rr.role_id
     where resource_id = #{resourceId,jdbcType=BIGINT}
   </select>
+
 </mapper>

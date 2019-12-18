@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.latiny.mapper.UserRoleDomainMapper">
-  <resultMap id="BaseResultMap" type="cn.latiny.domain.UserRoleDomain">
+<mapper namespace="com.latiny.mapper.UserRoleDomainMapper">
+  <resultMap id="BaseResultMap" type="com.latiny.domain.UserRoleDomain">
     <result column="user_id" jdbcType="BIGINT" property="userId" />
     <result column="role_id" jdbcType="BIGINT" property="roleId" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
   </resultMap>
-  <insert id="insert" parameterType="cn.latiny.domain.UserRoleDomain">
+  <insert id="insert" parameterType="com.latiny.domain.UserRoleDomain">
     insert into user_role (user_id, role_id, create_time, 
       update_time, is_deleted)
     values (#{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.latiny.domain.UserRoleDomain">
+  <insert id="insertSelective" parameterType="com.latiny.domain.UserRoleDomain">
     insert into user_role
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">

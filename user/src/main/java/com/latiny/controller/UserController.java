@@ -3,7 +3,6 @@ package com.latiny.controller;
 import com.latiny.entity.User;
 import com.latiny.repository.UserRepository;
 import com.latiny.vo.ResultVO;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;

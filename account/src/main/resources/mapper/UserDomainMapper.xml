@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.latiny.mapper.UserDomainMapper">
-  <resultMap id="BaseResultMap" type="cn.latiny.domain.UserDomain">
+<mapper namespace="com.latiny.mapper.UserDomainMapper">
+  <resultMap id="BaseResultMap" type="com.latiny.domain.UserDomain">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -29,7 +29,7 @@
     delete from users
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.latiny.domain.UserDomain">
+  <insert id="insert" parameterType="com.latiny.domain.UserDomain">
     insert into users (id, user_name, password, 
       real_name, phone, enabled, 
       account_non_expired, account_non_locked, credentials_non_expired, 
@@ -41,7 +41,7 @@
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="cn.latiny.domain.UserDomain">
+  <insert id="insertSelective" parameterType="com.latiny.domain.UserDomain">
     insert into users
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -120,7 +120,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.latiny.domain.UserDomain">
+  <update id="updateByPrimaryKeySelective" parameterType="com.latiny.domain.UserDomain">
     update users
     <set>
       <if test="userName != null">
@@ -159,7 +159,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.latiny.domain.UserDomain">
+  <update id="updateByPrimaryKey" parameterType="com.latiny.domain.UserDomain">
     update users
     set user_name = #{userName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.latiny.mapper.ResourceDomainMapper">
-  <resultMap id="BaseResultMap" type="cn.latiny.domain.ResourceDomain">
+<mapper namespace="com.latiny.mapper.ResourceDomainMapper">
+  <resultMap id="BaseResultMap" type="com.latiny.domain.ResourceDomain">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="code" jdbcType="VARCHAR" property="code" />
@@ -14,17 +14,19 @@
   <sql id="Base_Column_List">
     id, name, code, url, create_time, update_time, is_deleted
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from resource
     where id = #{id,jdbcType=BIGINT}
   </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from resource
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="cn.latiny.domain.ResourceDomain">
+  <insert id="insert" parameterType="com.latiny.domain.ResourceDomain">
     insert into resource (id, name, desc, 
       code, url, create_time, 
       update_time, is_deleted)
@@ -32,7 +34,7 @@
       #{code,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.latiny.domain.ResourceDomain">
+  <insert id="insertSelective" parameterType="com.latiny.domain.ResourceDomain">
     insert into resource
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -84,7 +86,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="cn.latiny.domain.ResourceDomain">
+  <update id="updateByPrimaryKeySelective" parameterType="com.latiny.domain.ResourceDomain">
     update resource
     <set>
       <if test="name != null">
@@ -111,7 +113,7 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="cn.latiny.domain.ResourceDomain">
+  <update id="updateByPrimaryKey" parameterType="com.latiny.domain.ResourceDomain">
     update resource
     set name = #{name,jdbcType=VARCHAR},
       desc = #{desc,jdbcType=VARCHAR},
@@ -128,5 +130,11 @@
     <include refid="Base_Column_List" />
     from resource
     where url = #{url,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from resource
   </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.latiny.feign;
 import com.latiny.entity.User;
 import com.latiny.vo.ResultVO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
  * @description: MenuFeign
  * @date 2019/12/3 15:10
  */
-@FeignClient(value = "user")
+@FeignClient(value = "user", configuration = FeignConfig.class)
 public interface UserFeign {
 
     @GetMapping("/user/findAll/{index}/{limit}")
@@ -23,9 +24,9 @@ public interface UserFeign {
     @DeleteMapping("/user/deleteById/{id}")
     public void deleteById(@PathVariable("id") long id);
 
-    @PostMapping("/user/save")
+    @PostMapping(value = "/user/save", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void save(User user);
 
-    @PutMapping("/user/update")
+    @PutMapping(value = "/user/update", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(User user);
 }

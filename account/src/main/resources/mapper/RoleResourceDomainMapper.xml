@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.latiny.mapper.RoleResourceDomainMapper">
-  <resultMap id="BaseResultMap" type="cn.latiny.domain.RoleResourceDomain">
+<mapper namespace="com.latiny.mapper.RoleResourceDomainMapper">
+  <resultMap id="BaseResultMap" type="com.latiny.domain.RoleResourceDomain">
+    <result column="id" jdbcType="BIGINT" property="id" />
     <result column="role_id" jdbcType="BIGINT" property="roleId" />
     <result column="resource_id" jdbcType="BIGINT" property="resourceId" />
+    <result column="code" jdbcType="VARCHAR" property="roleCode" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
   </resultMap>
-  <insert id="insert" parameterType="cn.latiny.domain.RoleResourceDomain">
+
+  <insert id="insert" parameterType="com.latiny.domain.RoleResourceDomain">
     insert into role_resource (role_id, resource_id, create_time, 
       update_time, is_deleted)
     values (#{roleId,jdbcType=BIGINT}, #{resourceId,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="cn.latiny.domain.RoleResourceDomain">
+
+  <insert id="insertSelective" parameterType="com.latiny.domain.RoleResourceDomain">
     insert into role_resource
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="roleId != null">
@@ -51,4 +56,11 @@
       </if>
     </trim>
   </insert>
+
+  <select id="findAll" resultMap="BaseResultMap">
+    select b.role_id, b.resource_id, c.code, url
+    from resource a
+    inner join role_resource b on a.id = b.resource_id
+    inner join role c on b.role_id = c.id
+  </select>
 </mapper>

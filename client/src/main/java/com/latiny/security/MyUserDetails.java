@@ -1,7 +1,9 @@
 package com.latiny.security;
 
-import com.latiny.entity.Role;
+import com.latiny.domain.RoleDomain;
+import com.latiny.domain.UserDomain;
 import com.latiny.entity.SysUser;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,50 +20,40 @@ import java.util.List;
  */
 public class MyUserDetails implements UserDetails {
 
-    private String username;
-    private String password;
-    private List<Role> roles;
+    private SysUser sysUser = null;
+    private List<RoleDomain> roles;
 
     public MyUserDetails() {
 
     }
 
-    public MyUserDetails(SysUser user) {
-        this.username = user.getUserName();
-        this.password = user.getPassword();
+    public MyUserDetails(UserDomain user) {
+        sysUser = new SysUser();
+        BeanUtils.copyProperties(user, this.sysUser);
     }
 
-    public MyUserDetails(SysUser user, List<Role> roles) {
-        this.username = user.getUserName();
-        this.password = user.getPassword();
+    public MyUserDetails(UserDomain user, List<RoleDomain> roles) {
+        this(user);
         this.roles = roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public List<Role> getRoles(){
-        return roles;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles) {
-            authorities.add(new SimpleGrantedAuthority(role.getName()));
+        for (RoleDomain role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getCode()));
         }
         return authorities;
     }
 
     @Override
     public String getPassword() {
-        return null;
+        return sysUser.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return username;
+        return sysUser.getPassword();
     }
 
     @Override
@@ -82,5 +74,17 @@ public class MyUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    public void setRoles(List<RoleDomain> roles) {
+        this.roles = roles;
+    }
+
+    public List<RoleDomain> getRoles() {
+        return roles;
+    }
+
+    public SysUser getSysUser() {
+        return sysUser;
     }
 }

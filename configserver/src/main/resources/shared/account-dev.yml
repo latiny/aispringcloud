@@ -8,7 +8,16 @@ spring:
     username: root
     password: gybk#123456
     driver-class-name: com.mysql.cj.jdbc.Driver
-
+  security:
+      user:
+        name: admin
+        password: abc123456
 mybatis:
   mapper-locations: classpath:/mapper/*.xml
   type-aliases-package: com.latiny.entity
+
+logging:
+  level:
+    com:
+      latiny:
+        mapper: debug
