@@ -1,7 +1,7 @@
 package com.latiny.controller;
 
-import com.latiny.entity.SysUser;
 import com.latiny.security.context.LoginContext;
+import com.netflix.ribbon.proxy.annotation.Http;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,24 +11,24 @@ import javax.servlet.http.HttpSession;
 /**
  * @author Latiny
  * @version 1.0
- * @description: TODO
+ * @description: MainController
  * @date 2019/12/13 16:01
  */
 @Controller
-@RequestMapping("/main")
 public class MainController {
 
     @Autowired
     private LoginContext loginContext;
 
-    @RequestMapping("/index")
-    public String index() {
-        return "product/index";
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
     }
 
-    @RequestMapping("/login")
-    public String login(HttpSession session) {
-        return "login";
+    @RequestMapping("/manage")
+    public String mange(HttpSession session) {
+        session.setAttribute("user", loginContext.getUser());
+        return "manage/manage";
     }
 
     @RequestMapping("/logout")

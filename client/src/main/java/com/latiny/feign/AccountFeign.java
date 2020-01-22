@@ -4,6 +4,7 @@ import com.latiny.domain.ResourceDomain;
 import com.latiny.domain.RoleDomain;
 import com.latiny.domain.RoleResourceDomain;
 import com.latiny.domain.UserDomain;
+import com.latiny.entity.Users;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,7 @@ public interface AccountFeign {
     public List<UserDomain> findAll();
 
     @GetMapping("/account/findUserByUsername/{username}")
-    public UserDomain findUserByUsername(@PathVariable("username") String username);
+    public Users findUserByUsername(@PathVariable("username") String username);
 
     @RequestMapping("/account/findRolesByUserName/{username}")
     public List<RoleDomain> findRolesByUserName(@PathVariable("username") String username);

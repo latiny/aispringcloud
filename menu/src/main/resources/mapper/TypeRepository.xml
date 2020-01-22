@@ -9,6 +9,6 @@
 
     <select id="findAll" resultType="Type">
 		select id, name
-		from t_type
+		from food_type
 	</select>
 </mapper>

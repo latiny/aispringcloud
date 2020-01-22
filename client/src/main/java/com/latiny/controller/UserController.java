@@ -1,8 +1,9 @@
 package com.latiny.controller;
 
 
-import com.latiny.entity.User;
+import com.latiny.domain.UserDomain;
 import com.latiny.feign.UserFeign;
+import com.latiny.utils.PasswordEncoderUtil;
 import com.latiny.vo.ResultVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,8 +31,10 @@ public class UserController {
     }
 
     @GetMapping("/user_add")
-    public String userAdd() {
-        return "users/user_add";
+    public ModelAndView userAdd() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("users/user_add");
+        return modelAndView;
     }
 
     @GetMapping("/findAll")
@@ -48,8 +51,15 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public String save(User user) {
-        user.setRegisterDate(user.getRegisterDate()==null ? new Date() : user.getRegisterDate());
+    public String save(UserDomain user) {
+        user.setCreateTime(new Date());
+        user.setUpdateTime(new Date());
+        user.setPassword(PasswordEncoderUtil.encodePassword(user.getPassword()));
+        user.setEnabled(0);
+        user.setAccountNonExpired(0);
+        user.setAccountNonLocked(0);
+        user.setCredentialsNonExpired(0);
+        user.setIsDeleted(0);
         userFeign.save(user);
         return "users/user_manage";
     }
@@ -63,7 +73,7 @@ public class UserController {
     }
 
     @PostMapping("/update")
-    public String update(User user) {
+    public String update(UserDomain user) {
         userFeign.update(user);
         return "users/user_manage";
     }

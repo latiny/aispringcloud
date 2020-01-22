@@ -26,20 +26,20 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">昵称：</label>
                 <div class="layui-inline">
-                    <input type="text" name="nickName" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+                    <input type="text" name="realName" lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">性别：</label>
-                <div class="layui-input-inline">
-                    <input type="radio" name="gender" value="男" title="男" checked="">
-                    <input type="radio" name="gender" value="女" title="女">
+                <div class="layui-input-block">
+                    <input type="radio" name="gender" value="1" title="男" lay-filter="gender" >
+                    <input type="radio" name="gender" value="2" title="女" lay-filter="gender" >
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">联系电话：</label>
                 <div class="layui-inline">
-                    <input type="text" name="telephone" lay-verify="telephone" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+                    <input type="text" name="phone" lay-verify="telephone" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -60,6 +60,13 @@
         var form = layui.form;
         var element = layui.element;
 
+        //此处即为 radio 的监听事件
+        form.on('radio(gender)', function(data){
+            console.log(data.elem); //得到radio原始DOM对象
+            console.log(data.value); //被点击的radio的value值
+            var level = data.value;//被点击的radio的value值
+        });
+
         //自定义验证规则
         form.verify({
             username: function(value){
@@ -68,10 +75,12 @@
                 }
             },
             password: [/^[A-Za-z0-9]+$/,"密码必须由数字和字母组成"],
-            telephone: [/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,"请输入正确的电话"]
+            phone: [/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/,"请输入正确的电话"]
         });
 
+        form.render();
     });
+
 </script>
 </body>
 </html>

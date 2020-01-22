@@ -1,6 +1,6 @@
 package com.latiny.security.context;
 
-import com.latiny.entity.SysUser;
+import com.latiny.entity.Users;
 
 /**
  * @author Latiny
@@ -10,5 +10,5 @@ import com.latiny.entity.SysUser;
  */
 public interface LoginContext {
 
-    SysUser getSysUser();
+    Users getUser();
 }

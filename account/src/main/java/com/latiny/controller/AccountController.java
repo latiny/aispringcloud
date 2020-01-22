@@ -3,13 +3,13 @@ package com.latiny.controller;
 import com.latiny.domain.ResourceDomain;
 import com.latiny.domain.RoleDomain;
 import com.latiny.domain.RoleResourceDomain;
-import com.latiny.domain.UserDomain;
+import com.latiny.domain.UsersDomain;
+import com.latiny.model.Users;
 import com.latiny.service.ResourceService;
 import com.latiny.service.RoleResourceService;
 import com.latiny.service.RoleService;
-import com.latiny.service.UserService;
+import com.latiny.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,11 +24,8 @@ import java.util.List;
 @RequestMapping("/account")
 public class AccountController {
 
-    @Value("${server.port}")
-    private String port;
-
     @Autowired
-    private UserService userService;
+    private UsersService userService;
     @Autowired
     private RoleService roleService;
     @Autowired
@@ -36,19 +33,10 @@ public class AccountController {
     @Autowired
     private RoleResourceService roleResourceService;
 
-    @GetMapping("/index")
-    public String index() {
-        return port;
-    }
-
-    @GetMapping("/findAllUsers")
-    public List<UserDomain> findAllUsers() {
-        return userService.findAll();
-    }
-
     @GetMapping("/findUserByUsername/{username}")
-    public UserDomain findUserByUsername(@PathVariable("username") String username) {
-        return userService.findUserByUsername(username);
+    public Users findUserByUsername(@PathVariable("username") String username) {
+        Users users = userService.findUserByUsername(username);
+        return users;
     }
 
     @GetMapping("/findRolesByUserName/{username}")

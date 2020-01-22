@@ -3,6 +3,7 @@ package com.latiny.domain;
 import java.util.Date;
 
 public class UserDomain {
+
     private Long id;
 
     private String userName;
@@ -11,7 +12,11 @@ public class UserDomain {
 
     private String realName;
 
-    private Long phone;
+    private String phone;
+
+    private String address;
+
+    private Integer gender;
 
     private Integer enabled;
 
@@ -59,12 +64,28 @@ public class UserDomain {
         this.realName = realName;
     }
 
-    public Long getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(Long phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
     public Integer getEnabled() {

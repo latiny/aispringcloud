@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.latiny.mapper.OrderMapper">
+
+  <resultMap id="BaseResultMap" type="OrderDomain">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="menu_id" jdbcType="BIGINT" property="menuId" />
+    <result column="admin_id" jdbcType="BIGINT" property="adminId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+  </resultMap>
+
+  <resultMap id="OrderMap" type="OrderDomain">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="BIGINT" property="userId" />
+    <result column="menu_id" jdbcType="BIGINT" property="menuId" />
+    <result column="admin_id" jdbcType="BIGINT" property="adminId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+    <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, user_id, menu_id, admin_id, create_time, update_time, state, is_deleted
+  </sql>
+
+  <select id="findByOrderId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="findAll" resultType="com.latiny.domain.OrderMenuDomain">
+    select a.id, c.user_name as adminName, b.name as menuName, a.create_time as createTime, a.state
+    from food_order a
+    inner join menu b on a.menu_id = b.id
+    inner join users c on a.user_id = c.id
+    order by a.id limit #{param1}, #{param2}
+  </select>
+
+  <select id="count"  resultType="java.lang.Integer">
+    select count(1)
+    from food_order
+    where is_deleted = 0
+  </select>
+
+  <select id="findOrderByState" resultType="com.latiny.domain.OrderMenuDomain">
+    select a.id, a.user_id, c.real_name as realName, b.name as menuName, a.create_time as createTime, a.update_time as updateTime, a.state, a.is_deleted as isDeleted
+    from food_order a
+    inner join menu b on a.menu_id = b.id
+    inner join users c on a.user_id = c.id
+    where a.state = #{param1}
+    order by a.id limit #{param2}, #{param3}
+  </select>
+
+  <insert id="insert" parameterType="OrderDomain">
+    insert into food_order(user_id, menu_id, admin_id, create_time, update_time, state, is_deleted)
+    values (#{userId, jdbcType=BIGINT}, #{menuId, jdbcType=BIGINT}, #{adminId, jdbcType=BIGINT},
+     #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{state,jdbcType=INTEGER},
+     #{isDeleted,jdbcType=INTEGER})
+  </insert>
+
+  <update id="updateByOrderId" parameterType="OrderDomain">
+    update food_order
+    <set>
+      <if test="userId != null and userId != 0">
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="menuId != null">
+        menu_id = #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="adminId != null">
+        admin_id = #{adminId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="state != null">
+        state = #{state,jdbcType=INTEGER},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted = #{isDeleted,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+</mapper>

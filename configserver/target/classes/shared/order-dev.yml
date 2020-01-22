@@ -1,2 +1,19 @@
 server:
   port: 8010
+spring:
+  appliation:
+    name: order
+  datasource:
+    url: jdbc:mysql://localhost:3306/ordersystem?useUnicode=true&characterEncoding=UTF-8&serverTimezone=GMT%2B8
+    username: root
+    password: gybk#123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
+  type-aliases-package: com.latiny.domain
+
+logging:
+  level:
+    com:
+      latiny:
+        mapper: debug

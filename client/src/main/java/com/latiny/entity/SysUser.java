@@ -14,6 +14,10 @@ public class SysUser {
 
     private Long phone;
 
+    private String address;
+
+    private Integer gender;
+
     private Integer enabled;
 
     private Integer accountNonExpired;
@@ -66,6 +70,22 @@ public class SysUser {
 
     public void setPhone(Long phone) {
         this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public Integer getGender() {
+        return gender;
+    }
+
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
     public Integer getEnabled() {

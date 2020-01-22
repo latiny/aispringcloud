@@ -26,10 +26,19 @@
                     [
                         {field:'id', width:70, title: '编号', sort: true}
                         ,{field:'userName', width:100, title: '用户名'}
-                        ,{field:'nickName', width:100, title: '昵称'}
-                        ,{field:'gender', width:70, title: '性别'}
-                        ,{field:'telephone', width:160, title: '联系电话'}
-                        ,{field:'registerDate', width:220, title: '注册日期'}
+                        ,{field:'realName', width:100, title: '昵称'}
+                        ,{field:'gender', width:70, title: '性别', templet : function(d) {
+                            var t = d.gender;
+                            if(t==1){
+                                return '男'
+                            }else if(t==2){
+                                return '女'
+                            }else {
+                                return '未知'
+                            }
+                        }}
+                        ,{field:'phone', width:160, title: '联系电话'}
+                        ,{field:'createTime', width:220, title: '注册日期'}
                         ,{field:'address', width:200, title: '地址'}
                         ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:80}
                 ]
@@ -55,7 +64,6 @@
     //二级菜单联动
     layui.use('element', function(){
         var element = layui.element;
-
     });
 </script>
 </body>

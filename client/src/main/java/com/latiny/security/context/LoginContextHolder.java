@@ -1,6 +1,6 @@
 package com.latiny.security.context;
 
-import com.latiny.entity.SysUser;
+import com.latiny.entity.Users;
 import com.latiny.security.MyUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,13 +10,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
  */
 public abstract class LoginContextHolder {
 
-    public static SysUser getSysUser() {
+    public static Users getUser() {
         Object param = getAuthentication();
         if (param == null) {
             return null;
         }
         if (param instanceof MyUserDetails) {
-            return getUserDetails().getSysUser();
+            return getUserDetails().getUser();
         }
         return null;
     }

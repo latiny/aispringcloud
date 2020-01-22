@@ -10,38 +10,26 @@
 <div class="layui-container" style="width: 960px;height: 600px;margin-top: 0px;padding-top: 60px;">
 
     <div style="margin-left: 460px; width: 300px;">
-        <a href="/order/index">首页</a>&nbsp;&nbsp;|&nbsp;&nbsp;欢迎回来！<a href="/account/redirect/order" th:text="我的订单"></a><a href="/account/logout">&nbsp;&nbsp;&nbsp;<button class="layui-btn layui-btn-warm layui-btn-radius">退出</button></a>
+        <a href="/order/index">首页</a>&nbsp;&nbsp;|&nbsp;&nbsp;欢迎回来！<a href="/logout">&nbsp;&nbsp;&nbsp;<button class="layui-btn layui-btn-warm layui-btn-radius">退出</button></a>
     </div>
 
     <table class="layui-hide" id="test" lay-filter="test"></table>
     <script th:src="@{/layui/layui.js}" charset="utf-8"></script>
     <script>
-        layui.use('table', function(){
+        layui.use(['util','table'], function(){
             var table = layui.table;
-
             table.render({
                 elem: '#test'
-                ,url:'/order/findAllByUid'
+                ,url:'/order/findAll'
                 ,title: '订单列表'
                 ,cols: [
                     [
-                        {field:'id', width:100, title: '编号', sort: true}
-                        , {
-                        field: 'name', width: 200, title: '菜品', templet: function (data) {
-                                return data.menu.name
-                            }
-                        }
-                        , {
-                        field: 'price', width: 100, title: '单价', templet: function (data) {
-                                return data.menu.price
-                            }
-                        }
-                        ,{field:'flavor', width:100, title: '口味',templet:function(data){
-                                return data.menu.flavor
-                            }
-                        }
-                        ,{field:'date',width:300,  title: '下单时间'}
-                        ,{field:'state', width:160, title: '订单状态',templet:function(data){
+                        {field:'id', width:100, title: '编号', sort: true},
+                        {field:'menuName', width:170, title: '菜品'},
+                        {field:'createTime', width:300,  title: '下单时间', templet:function (d) {
+                            return layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')
+                        }},
+                        {field:'state', width:160, title: '订单状态',templet:function(data){
                                 var result = "";
                                 switch (data.state) {
                                     case 0:
@@ -70,11 +58,17 @@
     </script>
 
 </div>
+
+<script id="createTime" type="text/html">
+    {{#
+        return layui.util.toDateString(d.createTime, 'yyyy-MM-dd HH:mm:ss')
+    }}
+</script>
+
 <script>
     //二级菜单联动
     layui.use('element', function(){
         var element = layui.element;
-
     });
 </script>
 </body>

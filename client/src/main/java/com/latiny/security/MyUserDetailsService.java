@@ -1,6 +1,7 @@
 package com.latiny.security;
 
 import com.latiny.domain.UserDomain;
+import com.latiny.entity.Users;
 import com.latiny.feign.AccountFeign;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,13 +27,14 @@ public class MyUserDetailsService implements UserDetailsService {
         return accountFeign.findAll();
     }
 
-    public UserDomain getByUsername(String username) {
+    public Users getByUsername(String username) {
+
         return accountFeign.findUserByUsername(username);
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        UserDomain user = getByUsername(username);
+        Users user = getByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("用户不存在：" + username);
         }

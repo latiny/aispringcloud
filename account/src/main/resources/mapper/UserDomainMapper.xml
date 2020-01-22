@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.latiny.mapper.UserDomainMapper">
-  <resultMap id="BaseResultMap" type="com.latiny.domain.UserDomain">
+  <resultMap id="BaseResultMap" type="com.latiny.domain.UsersDomain">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="real_name" jdbcType="VARCHAR" property="realName" />
-    <result column="phone" jdbcType="BIGINT" property="phone" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="gender" jdbcType="INTEGER" property="gender" />
     <result column="enabled" jdbcType="INTEGER" property="enabled" />
     <result column="account_non_expired" jdbcType="INTEGER" property="accountNonExpired" />
     <result column="account_non_locked" jdbcType="INTEGER" property="accountNonLocked" />
@@ -15,33 +17,44 @@
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
     <result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
   </resultMap>
+
   <sql id="Base_Column_List">
-    id, user_name, password, real_name, phone, enabled, account_non_expired, account_non_locked, 
+    id, user_name, password, real_name, phone, address, gender, enabled, account_non_expired, account_non_locked,
     credentials_non_expired, create_time, update_time, is_deleted
   </sql>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from users
     where id = #{id,jdbcType=BIGINT}
   </select>
+
+  <select id="count" resultType="int">
+    select count(id)
+    from users
+    where is_deleted = 0;
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from users
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.latiny.domain.UserDomain">
+
+  <insert id="insert" parameterType="com.latiny.domain.UsersDomain">
     insert into users (id, user_name, password, 
-      real_name, phone, enabled, 
+      real_name, phone, address, enabled,
       account_non_expired, account_non_locked, credentials_non_expired, 
       create_time, update_time, is_deleted
       )
     values (#{id,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{realName,jdbcType=VARCHAR}, #{phone,jdbcType=BIGINT}, #{enabled,jdbcType=INTEGER}, 
+      #{realName,jdbcType=VARCHAR}, #{phone,jdbcType=BIGINT}, #{address,jdbcType=VARCHAR}, #{enabled,jdbcType=INTEGER},
       #{accountNonExpired,jdbcType=INTEGER}, #{accountNonLocked,jdbcType=INTEGER}, #{credentialsNonExpired,jdbcType=INTEGER}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=INTEGER}
       )
   </insert>
-  <insert id="insertSelective" parameterType="com.latiny.domain.UserDomain">
+
+  <insert id="insertSelective" parameterType="com.latiny.domain.UsersDomain">
     insert into users
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -120,7 +133,8 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.latiny.domain.UserDomain">
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.latiny.domain.UsersDomain">
     update users
     <set>
       <if test="userName != null">
@@ -159,7 +173,8 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.latiny.domain.UserDomain">
+
+  <update id="updateByPrimaryKey" parameterType="com.latiny.domain.UsersDomain">
     update users
     set user_name = #{userName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
@@ -179,6 +194,7 @@
     select
     <include refid="Base_Column_List" />
     from users
+    where is_deleted = 0
   </select>
 
   <select id="findUserByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">

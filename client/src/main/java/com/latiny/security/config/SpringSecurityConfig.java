@@ -2,6 +2,7 @@ package com.latiny.security.config;
 
 import com.latiny.security.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.ObjectPostProcessor;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +11,7 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.intercept.FilterSecurityInterceptor;
 
 /**
@@ -63,23 +65,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/**").fullyAuthenticated()
                 .antMatchers("/layui/**").permitAll()
                 .antMatchers("/js/**").permitAll()
+                .antMatchers("/images/**").permitAll()
                 .and().formLogin().loginPage("/login").permitAll()
                 .failureHandler(myAuthenticationFailureHandler)
                 .successHandler(myAuthenticationSuccessHandler)
                 .and().logout().permitAll()
                 .and().csrf().disable().exceptionHandling().accessDeniedHandler(myAccessDeniedHandler);
+        http.headers().frameOptions().disable();
         http.authenticationProvider(myAuthenticationProvider);
-//        http.csrf().disable();
-//        http.authorizeRequests()
-//                .antMatchers("/js/**","/layui/**","/images/*","/fonts/**","/**/*.png ","/**/*.jpg").permitAll()
-//                .antMatchers("/", "/login","/signin").permitAll()
-//                .anyRequest().authenticated()
-//                .and().formLogin().loginPage("/login").defaultSuccessUrl("/index")
-//                .successHandler(myAuthenticationSuccessHandler)
-//                .failureHandler(myAuthenticationFailureHandler).permitAll()
-//                .and().logout().logoutSuccessUrl("login?logout").permitAll();
-        //.and().addFilterBefore(myFilterSecurityInterceptor, FilterSecurityInterceptor.class);
-        //http.authenticationProvider();
     }
 
     /**
@@ -90,7 +83,16 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
      */
     @Override
     public void configure(WebSecurity web) throws Exception {
-//        web.ignoring().antMatchers("/layui/**");
-//        web.ignoring().antMatchers("/js/**");
+
+    }
+
+    /**
+     * @Description 自定义加密
+     * @Date 2020/1/10 15:07
+     * @Version  1.0
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

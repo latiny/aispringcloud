@@ -1,6 +1,7 @@
 package com.latiny.security.context.impl;
 
 import com.latiny.entity.SysUser;
+import com.latiny.entity.Users;
 import com.latiny.security.context.LoginContext;
 import com.latiny.security.context.LoginContextHolder;
 import org.springframework.stereotype.Service;
@@ -15,7 +16,7 @@ import org.springframework.stereotype.Service;
 public class LoginContextImpl implements LoginContext {
 
     @Override
-    public SysUser getSysUser() {
-        return LoginContextHolder.getSysUser();
+    public Users getUser() {
+        return LoginContextHolder.getUser();
     }
 }

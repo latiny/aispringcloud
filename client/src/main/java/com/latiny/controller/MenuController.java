@@ -3,6 +3,7 @@ package com.latiny.controller;
 
 import com.latiny.entity.Menu;
 import com.latiny.entity.SysUser;
+import com.latiny.entity.Users;
 import com.latiny.feign.MenuFeign;
 import com.latiny.security.context.LoginContext;
 import com.latiny.vo.ResultVO;
@@ -30,7 +31,7 @@ public class MenuController {
 
     @GetMapping("/menu_manage")
     public String menuManage(HttpSession session) {
-        SysUser user = loginContext.getSysUser();
+        Users user = loginContext.getUser();
         session.setAttribute("user", user);
         return "menu/menu_manage";
     }
@@ -48,7 +49,7 @@ public class MenuController {
         return "menu/menu_manage";
     }
 
-    @GetMapping("/findTypes")
+    @GetMapping("/menu_add")
     public ModelAndView findTypes() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("/menu/menu_add");

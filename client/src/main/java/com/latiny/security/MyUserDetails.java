@@ -3,6 +3,7 @@ package com.latiny.security;
 import com.latiny.domain.RoleDomain;
 import com.latiny.domain.UserDomain;
 import com.latiny.entity.SysUser;
+import com.latiny.entity.Users;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,19 +21,18 @@ import java.util.List;
  */
 public class MyUserDetails implements UserDetails {
 
-    private SysUser sysUser = null;
+    private Users user = null;
     private List<RoleDomain> roles;
 
     public MyUserDetails() {
 
     }
 
-    public MyUserDetails(UserDomain user) {
-        sysUser = new SysUser();
-        BeanUtils.copyProperties(user, this.sysUser);
+    public MyUserDetails(Users user) {
+        this.user = user;
     }
 
-    public MyUserDetails(UserDomain user, List<RoleDomain> roles) {
+    public MyUserDetails(Users user, List<RoleDomain> roles) {
         this(user);
         this.roles = roles;
     }
@@ -48,12 +48,12 @@ public class MyUserDetails implements UserDetails {
 
     @Override
     public String getPassword() {
-        return sysUser.getPassword();
+        return user.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return sysUser.getPassword();
+        return user.getPassword();
     }
 
     @Override
@@ -84,7 +84,7 @@ public class MyUserDetails implements UserDetails {
         return roles;
     }
 
-    public SysUser getSysUser() {
-        return sysUser;
+    public Users getUser() {
+        return user;
     }
 }

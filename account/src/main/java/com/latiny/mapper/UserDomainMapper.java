@@ -1,6 +1,6 @@
 package com.latiny.mapper;
 
-import com.latiny.domain.UserDomain;
+import com.latiny.domain.UsersDomain;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -10,17 +10,21 @@ public interface UserDomainMapper {
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(UserDomain record);
+    int insert(UsersDomain record);
 
-    int insertSelective(UserDomain record);
+    int insertSelective(UsersDomain record);
 
-    UserDomain selectByPrimaryKey(Long id);
+    UsersDomain selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(UserDomain record);
+    int updateByPrimaryKeySelective(UsersDomain record);
 
-    int updateByPrimaryKey(UserDomain record);
+    int updateByPrimaryKey(UsersDomain record);
 
-    List<UserDomain> findAll();
+    List<UsersDomain> findAll(int index, int limit);
 
-    UserDomain findUserByUsername(String username);
+    UsersDomain findUserByUsername(String username);
+
+    UsersDomain findById(long id);
+
+    int count();
 }
